@@ -1,4 +1,4 @@
-package com.example.tmiz
+package com.example.tmiz.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
