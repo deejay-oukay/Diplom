@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.RegActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_login"
@@ -30,10 +30,25 @@
         android:labelFor="@id/password_input"
         app:helperText="@string/password_layout"
         app:layout_constraintTop_toBottomOf="@id/layout_login"
-        app:layout_constraintBottom_toBottomOf="@id/layout_password"
-    >
+        app:layout_constraintBottom_toTopOf="@id/layout_password2"
+        >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_password2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/password2_input"
+        app:helperText="@string/password2_layout"
+        app:layout_constraintTop_toBottomOf="@id/layout_password"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password2_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
         />
@@ -44,7 +59,7 @@
         android:text="@string/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_password"
+        app:layout_constraintTop_toBottomOf="@id/layout_password2"
         app:layout_constraintStart_toStartOf="parent"
     />
 
@@ -53,9 +68,8 @@
         android:text="@string/button_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_password"
+        app:layout_constraintTop_toBottomOf="@id/layout_password2"
         app:layout_constraintEnd_toEndOf="parent"
     />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
