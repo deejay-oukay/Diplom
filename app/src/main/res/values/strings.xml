@@ -1,12 +1,19 @@
 <resources>
-    <string name="app_name">ТМИЗ</string>
+    <string name="app_name">Твоё мнение имеет значение</string>
     <string name="button_create">Задать вопрос</string>
     <string name="button_answers">Ответить на вопросы</string>
     <string name="button_questions">Мои вопросы</string>
     <string name="button_login">Войти</string>
     <string name="button_reg">Зарегистрироваться</string>
-    <string name="login_layout">Логин (e-mail)</string>
-    <string name="password_layout">Пароль</string>
-    <string name="password2_layout">Пароль (ещё раз)</string>
+    <string name="login_input">Логин (e-mail)</string>
+    <string name="password_input">Пароль</string>
+    <string name="password2_input">Пароль (ещё раз)</string>
     <string name="button_add">Добавить вариант ответа</string>
+    <string name="button_del">Удалить последний вариант ответа</string>
+    <string name="label_menu">Меню</string>
+    <string name="label_auth">Авторизация</string>
+    <string name="label_reg">Регистрация</string>
+    <string name="label_create">Создание вопроса</string>
+    <string name="hint_whats_your_question">Какой у тебя вопрос?</string>
+    <string name="hint_is_multi_enabled">Можно выбрать несколько вариантов ответа?</string>
 </resources>

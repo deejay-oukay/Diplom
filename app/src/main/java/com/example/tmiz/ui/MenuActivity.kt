@@ -1,5 +1,6 @@
 package com.example.tmiz.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tmiz.databinding.ActivityMenuBinding
@@ -10,5 +11,10 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.createButton.setOnClickListener {
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -12,21 +12,36 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ТМИЗ"
+        android:theme="@style/Base.Theme.Tmiz"
         tools:targetApi="31">
         <activity
             android:name=".ui.CreateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity"
+            android:label="@string/label_create"
+            />
         <activity
             android:name=".ui.RegActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity"
+            android:label="@string/label_reg"
+        />
         <activity
             android:name=".ui.LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.ТМИЗ" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity"
+            android:label="@string/label_auth"
+        />
         <activity
             android:name=".ui.MenuActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity"
+            android:label="@string/label_menu"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
