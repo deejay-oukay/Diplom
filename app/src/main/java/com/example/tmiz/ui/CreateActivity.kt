@@ -13,13 +13,15 @@ class CreateActivity : AppCompatActivity() {
     //Как добавить его в подсказку к полю - не понял
     //Можно сразу добавить несколько элементов - будет сразу несколько вариантов ответов
     private var answersArray = arrayListOf("")
+    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var listView: ListView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = ArrayAdapter(this, R.layout.answers_on_create,  answersArray)
-        val listView:ListView = findViewById(R.id.answers_list)
+        adapter = ArrayAdapter(this, R.layout.answers_on_create,  answersArray)
+        listView = findViewById(R.id.answers_list)
         listView.setAdapter(adapter)
 
         binding.addButton.setOnClickListener {
@@ -45,19 +47,23 @@ class CreateActivity : AppCompatActivity() {
         }
 
         binding.multiCheckbox.setOnClickListener {
-            //если гачлока отмечена
-            if (binding.multiCheckbox.isChecked) {
-                //добавляем пункты, пока их не станет хотя бы 2
-                while (answersArray.size < 2)
-                    answersArray.add("")
-                //отображаем изменения
-                listView.setAdapter(adapter)
-            }
+            multiCheckUnCheck()
+        }
+        binding.multiLabel.setOnClickListener {
+            binding.multiCheckbox.isChecked = !binding.multiCheckbox.isChecked
+            multiCheckUnCheck()
         }
 
    }
 
-    private fun MultiCheckUnCheck(){
-
+    private fun multiCheckUnCheck(){
+        //если гачлока отмечена
+        if (binding.multiCheckbox.isChecked) {
+            //добавляем пункты, пока их не станет хотя бы 2
+            while (answersArray.size < 2)
+                answersArray.add("")
+            //отображаем изменения
+            listView.setAdapter(adapter)
+        }
     }
 }
