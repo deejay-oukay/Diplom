@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.tmiz.R
+import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityCreateBinding
+import kotlinx.coroutines.launch
 
 class CreateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateBinding
@@ -53,6 +56,12 @@ class CreateActivity : AppCompatActivity() {
             binding.multiCheckbox.isChecked = !binding.multiCheckbox.isChecked
             multiCheckUnCheck()
         }
+        binding.createButton.setOnClickListener {
+            lifecycleScope.launch {
+                val response = RetroBuilder.api.questionCreate()
+                binding.questionInput.setText(response.toString())
+            }
+        }
 
    }
 
@@ -65,5 +74,16 @@ class CreateActivity : AppCompatActivity() {
             //отображаем изменения
             listView.setAdapter(adapter)
         }
+    }
+
+    private fun questionCreate(){
+        val str = """{
+            "question":""""+binding.questionInput.text+"""",
+            "answers:[
+                {
+                    "answer":""""+ answersArray[0] +""""
+                }
+            ]
+        }""".trimIndent()
     }
 }
