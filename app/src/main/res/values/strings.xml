@@ -16,4 +16,5 @@
     <string name="label_create">Создание вопроса</string>
     <string name="hint_whats_your_question">Какой у тебя вопрос?</string>
     <string name="hint_is_multi_enabled">Можно выбрать несколько вариантов ответа?</string>
+    <string name="request_failed">Ошибка при выполнении запроса</string>
 </resources>

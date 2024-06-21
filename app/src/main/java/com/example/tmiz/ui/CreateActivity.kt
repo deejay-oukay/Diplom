@@ -6,9 +6,12 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.tmiz.R
+import com.example.tmiz.api.ApiException
 import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityCreateBinding
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
+import org.json.JSONObject
 
 class CreateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateBinding
@@ -58,8 +61,18 @@ class CreateActivity : AppCompatActivity() {
         }
         binding.createButton.setOnClickListener {
             lifecycleScope.launch {
-                val response = RetroBuilder.api.questionCreate()
-                binding.questionInput.setText(response.toString())
+                val jsonObject = JSONObject()
+                jsonObject.put("question",binding.questionInput.text.toString())
+                jsonObject.put("answers",answersArray)
+                jsonObject.put("multi",binding.multiCheckbox.isChecked)
+                val jsonString = jsonObject.toString()
+                //ДОПИЛИТЬ
+                val requestBody = RequestBody.create("application/json",jsonString)
+                val response = RetroBuilder.api.questionCreate(requestBody)
+                if(!response.isSuccessful)
+                    throw ApiException(R.string.request_failed.toString())
+                else
+                    binding.questionInput.setText(response.body().toString())
             }
         }
 
