@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:labelFor="@id/question_input"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/answers_layout"
     >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/question_input"
@@ -22,11 +23,26 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/answers_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/answers_input"
+        app:layout_constraintTop_toBottomOf="@id/question_layout"
+    >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/answers_input"
+            android:hint="@string/hint_answers_by_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <CheckBox
         android:id="@+id/multi_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/question_layout"
+        app:layout_constraintTop_toBottomOf="@id/answers_layout"
         app:layout_constraintStart_toStartOf="parent"
     />
     <TextView
@@ -42,45 +58,13 @@
 
     </TextView>
 
-    <ListView
-        android:id="@+id/answers_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/multi_checkbox"
-        app:layout_constraintBottom_toTopOf="@id/create_button"
-        android:paddingTop="128dp"
-        android:layout_marginBottom="128dp"
-    />
-
-    <ImageButton
-        android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/button_add"
-        android:src="@drawable/baseline_add_24"
-        app:layout_constraintTop_toBottomOf="@id/answers_list"
-        app:layout_constraintEnd_toEndOf="@id/answers_list"
-    />
-
-    <ImageButton
-        android:id="@+id/del_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/button_del"
-        android:src="@drawable/remove_24px"
-        app:layout_constraintTop_toBottomOf="@id/answers_list"
-        app:layout_constraintEnd_toEndOf="@id/answers_list"
-        app:layout_constraintEnd_toStartOf="@id/add_button"
-    />
-
-    <Button
+   <Button
         android:id="@+id/create_button"
         android:text="@string/button_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/multi_checkbox"
         app:layout_constraintStart_toStartOf="parent"
     />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

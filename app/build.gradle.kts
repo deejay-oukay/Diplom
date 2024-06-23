@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
     //Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
 

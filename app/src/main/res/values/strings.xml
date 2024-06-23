@@ -17,4 +17,5 @@
     <string name="hint_whats_your_question">Какой у тебя вопрос?</string>
     <string name="hint_is_multi_enabled">Можно выбрать несколько вариантов ответа?</string>
     <string name="request_failed">Ошибка при выполнении запроса</string>
+    <string name="hint_answers_by_line">Варианты ответов (по одному в строке)</string>
 </resources>
