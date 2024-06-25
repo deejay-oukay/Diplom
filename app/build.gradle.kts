@@ -57,5 +57,4 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     //Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
 }

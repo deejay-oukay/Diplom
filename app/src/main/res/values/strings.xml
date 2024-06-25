@@ -18,4 +18,17 @@
     <string name="hint_is_multi_enabled">Можно выбрать несколько вариантов ответа?</string>
     <string name="request_failed">Ошибка при выполнении запроса</string>
     <string name="hint_answers_by_line">Варианты ответов (по одному в строке)</string>
+    <string name="error_unknown_class">Неизвестное имя класса</string>
+    <string name="state_loading">Минуточку…</string>
+    <string name="state_success">Успешно :-)</string>
+    <string name="state_error">Ошибка:</string>
+    <string name="error_401">Вы не авторизованы</string>
+    <string name="error_409_question">Такой вопрос уже есть</string>
+    <string name="error_500_and_higher">Ошибка на стороне сервера</string>
+    <string name="error_400">Некорректный запрос</string>
+    <string name="error_unknown">Что-то пошло не так</string>
+    <string name="label_answer_the_questions">Ответить на вопросы</string>
+    <string name="button_answer">Ответить</string>
+    <string name="button_skip">Пропустить</string>
+    <string name="hint_answer_the_questions">Выберите ответ из вариантов, создайте свой вариант или пропустите, если вопрос не интересный</string>
 </resources>
