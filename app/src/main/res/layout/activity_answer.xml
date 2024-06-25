@@ -12,18 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/answers_list"
     />
 
     <ListView
         android:id="@+id/answers_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/question_label"
-        app:layout_constraintBottom_toTopOf="@id/status_label"
-        android:paddingTop="128dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="128dp"
-        />
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toTopOf="@id/status_label"
+        app:layout_constraintTop_toBottomOf="@id/question_label"
+        app:layout_constraintVertical_bias="0.161"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/status_label"
@@ -35,6 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/hint_answer_the_questions"
+
     />
 
     <Button
@@ -44,6 +45,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/next"
+        android:visibility="visible"
+        android:text="Next activity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/answer_button"
+        app:layout_constraintEnd_toStartOf="@id/skip_button"
     />
 
     <Button
