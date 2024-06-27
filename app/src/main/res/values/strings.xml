@@ -31,4 +31,5 @@
     <string name="button_answer">Ответить</string>
     <string name="button_skip">Пропустить</string>
     <string name="hint_answer_the_questions">Выберите ответ из вариантов, создайте свой вариант или пропустите, если вопрос не интересный</string>
+    <string name="error_204">Нет вопросов без Ваших ответов</string>
 </resources>

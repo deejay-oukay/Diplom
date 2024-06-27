@@ -13,4 +13,7 @@ interface Api {
         @Field("answers") answers: String,
         @Field("multi") multi: Boolean
     ): Response<Results>
+
+    @POST("/api/questions-random/")
+    suspend fun questionsRandom(): Response<Results>
 }

@@ -38,9 +38,8 @@ class CreateActivity : AppCompatActivity() {
                     code = result.code()
                     if (code == 201)
                         _state.value = State.Success
-                    else {
+                    else
                         _state.value = State.Error(errors())
-                    }
                 } catch (e: Exception) {
                     _state.value = State.Error(e.message.toString())
                     _error.send(e.toString())
