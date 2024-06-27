@@ -18,12 +18,27 @@
         android:id="@+id/answers_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="160dp"
         android:layout_marginTop="64dp"
-        app:layout_constraintBottom_toTopOf="@id/status_label"
+        app:layout_constraintBottom_toTopOf="@id/new_answer_layout"
         app:layout_constraintTop_toBottomOf="@id/question_label"
         app:layout_constraintVertical_bias="0.161"
         tools:layout_editor_absoluteX="0dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_answer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/new_answer_input"
+        app:layout_constraintBottom_toTopOf="@id/status_label"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/new_answer_input"
+            android:hint="@string/hint_new_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/status_label"

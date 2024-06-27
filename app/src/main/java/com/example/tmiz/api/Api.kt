@@ -16,4 +16,12 @@ interface Api {
 
     @POST("/api/questions-random/")
     suspend fun questionsRandom(): Response<Results>
+
+    @FormUrlEncoded
+    @POST("/api/answers-send/")
+    suspend fun answersSend(
+        @Field("questionId") questionId: String,
+        @Field("answers") answers: Array<String>
+    ): Response<Results>
+
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.tmiz.R
 import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityCreateBinding
-import com.example.tmiz.presentation.State
+import com.example.tmiz.presentation.StateCreate
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class CreateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateBinding
-    private val _state = MutableStateFlow<State>(State.Default)
-    private val state = _state.asStateFlow()
+    private val _stateCreate = MutableStateFlow<StateCreate>(StateCreate.Default)
+    private val state = _stateCreate.asStateFlow()
     private val _error = Channel<String>()
     private var code = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class CreateActivity : AppCompatActivity() {
         binding.createButton.setOnClickListener {
             lifecycleScope.launch {
                 try {
-                    _state.value = State.Loading
+                    _stateCreate.value = StateCreate.Loading
                     val result = RetroBuilder.api.questionCreate(
                         binding.questionInput.text.toString(),
                         binding.answersInput.text.toString(),
@@ -37,11 +37,11 @@ class CreateActivity : AppCompatActivity() {
                     )
                     code = result.code()
                     if (code == 201)
-                        _state.value = State.Success
+                        _stateCreate.value = StateCreate.Success
                     else
-                        _state.value = State.Error(errors())
+                        _stateCreate.value = StateCreate.Error(errors())
                 } catch (e: Exception) {
-                    _state.value = State.Error(e.message.toString())
+                    _stateCreate.value = StateCreate.Error(e.message.toString())
                     _error.send(e.toString())
                 }
             }
@@ -49,18 +49,18 @@ class CreateActivity : AppCompatActivity() {
         lifecycleScope.launch {
             state.collect { state ->
                 when (state) {
-                    State.Default -> {
+                    StateCreate.Default -> {
                         lifecycleScope.launch {
                             binding.statusLabel.text = ""
                         }
                     }
-                    State.Loading -> {
+                    StateCreate.Loading -> {
                         lifecycleScope.launch {
                             binding.statusLabel.text = getString(R.string.state_loading)
                         }
                         binding.createButton.isEnabled = false
                     }
-                    State.Success -> {
+                    StateCreate.Success -> {
                         lifecycleScope.launch {
                             binding.statusLabel.text = getString(R.string.state_success)
                         }
@@ -69,7 +69,7 @@ class CreateActivity : AppCompatActivity() {
                         binding.answersInput.setText("")
                         binding.multiCheckbox.isChecked = false
                     }
-                    is State.Error -> {
+                    is StateCreate.Error -> {
                         lifecycleScope.launch {
                             binding.statusLabel.text = buildString {
                                 append(getString(R.string.state_error))
