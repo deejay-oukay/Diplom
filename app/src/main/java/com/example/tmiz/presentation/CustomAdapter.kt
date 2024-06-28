@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import com.example.tmiz.R
+import com.example.tmiz.ui.AnswerActivity
 import java.util.ArrayList
 
 class CustomAdapter(private val context: Context,
@@ -53,7 +54,8 @@ class CustomAdapter(private val context: Context,
             val tempview = holder.check!!.getTag(R.integer.btn_plus_view) as View
             val tv: TextView = tempview.findViewById(R.id.answer_label)
             val pos = holder.check!!.tag as Int
-            Toast.makeText(context, "Вариант ответа $pos выбран!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,
+                context.getString(R.string.toast_selected_answers_number)+(pos+1), Toast.LENGTH_SHORT).show()
             if (modelArrayList[pos].getSelecteds()) {
                 modelArrayList[pos].setSelecteds(false)
                 answersList = modelArrayList

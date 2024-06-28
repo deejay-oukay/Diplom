@@ -50,7 +50,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/hint_answer_the_questions"
-
     />
 
     <Button
@@ -60,17 +59,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-    />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/next"
-        android:visibility="invisible"
-        android:text="Next activity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/answer_button"
-        app:layout_constraintEnd_toStartOf="@id/skip_button"
     />
 
     <Button

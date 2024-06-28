@@ -29,10 +29,12 @@
     <string name="error_unknown">Что-то пошло не так</string>
     <string name="label_answer_the_questions">Ответить на вопросы</string>
     <string name="button_answer">Ответить</string>
-    <string name="button_skip">Пропустить</string>
+    <string name="button_skip">Следующий</string>
     <string name="hint_answer_the_questions">Выберите ответ из вариантов, создайте свой вариант или пропустите, если вопрос не интересный</string>
     <string name="error_204">Нет вопросов без Ваших ответов</string>
     <string name="hint_new_answer">Ваш вариант ответа</string>
     <string name="new_answer_spacer">Свой вариант (введите в поле ниже)</string>
     <string name="error_404">Вопрос не найден</string>
+    <string name="label_answer_accepted">Ваш голос учтён</string>
+    <string name="toast_selected_answers_number">"Выбран вариант: "</string>
 </resources>

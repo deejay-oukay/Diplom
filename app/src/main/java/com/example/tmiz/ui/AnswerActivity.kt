@@ -1,7 +1,7 @@
 package com.example.tmiz.ui
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -10,7 +10,6 @@ import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityAnswerBinding
 import com.example.tmiz.presentation.AnswersModel
 import com.example.tmiz.presentation.CustomAdapter
-import com.example.tmiz.presentation.NextActivity
 import com.example.tmiz.presentation.StateAnswer
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +23,10 @@ class AnswerActivity : AppCompatActivity() {
     private val _error = Channel<String>()
     private var code = 0
     private var question: String? = null
+    private var questionId: String = ""
     private var multi: Boolean = false
-    private lateinit var answersIds: ArrayList<String>
+    private lateinit var answersIds: Array<String>
+    private var selectedAnswers: ArrayList<String> = arrayListOf()
 
     private lateinit var modelArrayList: ArrayList<AnswersModel>
     private lateinit var customAdapter: CustomAdapter
@@ -37,14 +38,40 @@ class AnswerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAnswerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         modelArrayList = getModel(false)
         customAdapter = CustomAdapter(this, modelArrayList)
         binding.answersList.adapter = customAdapter
 
-        binding.next.setOnClickListener {
-            val intent = Intent(this@AnswerActivity, NextActivity::class.java)
-            startActivity(intent)
+        binding.answerButton.setOnClickListener {
+            for (elem in CustomAdapter.answersList) {
+                if (elem.getSelecteds()) {
+                    try {
+                        selectedAnswers.add(elem.getAnswer())
+                    } catch (e: Exception) {
+                        _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
+                    }
+                }
+            }
+            if (!binding.newAnswerInput.text.isNullOrEmpty())
+                selectedAnswers.add(binding.newAnswerInput.text.toString())
+            lifecycleScope.launch {
+                try {
+                    _stateAnswer.value = StateAnswer.Sending
+                    val result = RetroBuilder.api.answersSend(questionId, selectedAnswers.toTypedArray())
+                    code = result.code()
+                    if (code == 202)
+                    {
+                        _stateAnswer.value = StateAnswer.SuccessSend
+                        selectedAnswers.clear()
+                        //answersIds = result.body()?.body?.answersIds!!
+                    }
+                    else
+                        _stateAnswer.value = StateAnswer.ErrorSend(errors())
+                } catch (e: Exception) {
+                    _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
+                    _error.send(e.toString())
+                }
+            }
         }
 
         binding.skipButton.setOnClickListener {
@@ -59,6 +86,7 @@ class AnswerActivity : AppCompatActivity() {
                             binding.statusLabel.text = getString(R.string.state_loading)
                             binding.answersList.isVisible = false
                             binding.answerButton.isEnabled = false
+                            binding.newAnswerLayout.isVisible = false
                         }
                     }
                     StateAnswer.SuccessGet -> {
@@ -68,6 +96,8 @@ class AnswerActivity : AppCompatActivity() {
                             binding.questionLabel.text = question.toString()
                             updateAnswers()
                             binding.answersList.isVisible = true
+                            binding.newAnswerInput.text = null
+                            binding.newAnswerLayout.isVisible = true
                         }
                     }
                     is StateAnswer.ErrorGet -> {
@@ -78,6 +108,7 @@ class AnswerActivity : AppCompatActivity() {
                                 append(state.error)
                                 binding.answerButton.isEnabled = false
                             }
+                            binding.newAnswerLayout.isVisible = false
                         }
                     }
                     StateAnswer.Sending -> {
@@ -98,7 +129,7 @@ class AnswerActivity : AppCompatActivity() {
                     }
                     StateAnswer.SuccessSend -> {
                         lifecycleScope.launch {
-                            binding.statusLabel.text = getString(R.string.hint_answer_the_questions)
+                            binding.statusLabel.text = getString(R.string.label_answer_accepted)
                             binding.answerButton.isEnabled = false
                         }
                     }
@@ -117,6 +148,7 @@ class AnswerActivity : AppCompatActivity() {
                 if (code == 200)
                 {
                     question = result.body()?.body?.question.toString()
+                    questionId = result.body()?.body?.questionId.toString()
                     _stateAnswer.value = StateAnswer.SuccessGet
                     setAnswers(result.body()?.body?.answers)
                     updateAnswers()
@@ -131,7 +163,7 @@ class AnswerActivity : AppCompatActivity() {
         }
     }
 
-    private fun getModel(isSelect: Boolean): ArrayList<AnswersModel> {
+    fun getModel(isSelect: Boolean): ArrayList<AnswersModel> {
         val list = ArrayList<AnswersModel>()
         for (element in answers) {
             val model = AnswersModel()
