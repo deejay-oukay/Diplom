@@ -9,11 +9,11 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import com.example.tmiz.R
-import com.example.tmiz.ui.AnswerActivity
 import java.util.ArrayList
 
 class CustomAdapter(private val context: Context,
-                    private var modelArrayList: ArrayList<AnswersModel>
+                    private var modelArrayList: ArrayList<AnswersModel>,
+                    private val multi: Boolean = true
 ) : BaseAdapter() {
     override fun getViewTypeCount(): Int {
         return count
@@ -38,7 +38,10 @@ class CustomAdapter(private val context: Context,
             holder = ViewHolder()
             val inflater = context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = inflater.inflate(R.layout.answers, null, true)
+            convertView = if (multi)
+                inflater.inflate(R.layout.answers, null, true)
+            else
+                inflater.inflate(R.layout.answers1, null, true)
             holder.check = convertView!!.findViewById(R.id.answer_check)!!
             holder.label = convertView.findViewById(R.id.answer_label)!!
             convertView.tag = holder

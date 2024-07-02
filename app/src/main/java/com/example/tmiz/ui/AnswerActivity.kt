@@ -166,6 +166,7 @@ class AnswerActivity : AppCompatActivity() {
                 _error.send(e.toString())
             }
         }
+        customAdapter = CustomAdapter(this, modelArrayList,multi)
     }
 
     fun getModel(isSelect: Boolean): ArrayList<AnswersModel> {
