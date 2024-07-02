@@ -34,9 +34,9 @@ class AnswerActivity : AppCompatActivity() {
 
     //объединяет ответы в String, разделённый переносами строк
     private fun answersConcatenate(oneOfAnswers: String) {
-        if (oneOfAnswers == R.string.new_answer_spacer.toString())
+        if (oneOfAnswers == getText(R.string.new_answer_spacer).toString())
             return
-        else if (selectedAnswers.isNullOrEmpty())
+        if (selectedAnswers.isNullOrEmpty())
             selectedAnswers = oneOfAnswers
         else
             selectedAnswers = selectedAnswers + "\n" + oneOfAnswers
@@ -68,16 +68,14 @@ class AnswerActivity : AppCompatActivity() {
                     val result = RetroBuilder.api.answersSend(questionId, selectedAnswers)
                     code = result.code()
                     if (code == 202)
-                    {
                         _stateAnswer.value = StateAnswer.SuccessSend
-                        selectedAnswers = null
-                    }
                     else
                         _stateAnswer.value = StateAnswer.ErrorSend(errors())
                 } catch (e: Exception) {
                     _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
                     _error.send(e.toString())
                 }
+                selectedAnswers = null
             }
         }
 
@@ -203,6 +201,8 @@ class AnswerActivity : AppCompatActivity() {
             return getString(R.string.error_401)
         else if (code == 404)
             return getString(R.string.error_404)
+        else if (code == 422)
+            return getString(R.string.error_422)
         else if ((code == 204) || (question == null))
             return getString(R.string.error_204)
         else if (code >= 500)
