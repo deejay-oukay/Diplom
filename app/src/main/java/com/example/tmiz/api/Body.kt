@@ -6,6 +6,5 @@ data class Body(
     @SerializedName("questionId") val questionId: Int,
     @SerializedName("question") val question: String?,
     @SerializedName("answers") val answers: Array<String>?,
-//    @SerializedName("answers") val answersIds: Array<String>?,
     @SerializedName("multi") val multi: Boolean?
 )

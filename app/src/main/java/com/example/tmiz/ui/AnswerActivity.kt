@@ -24,7 +24,6 @@ class AnswerActivity : AppCompatActivity() {
     private var question: String? = null
     private var questionId: String = ""
     private var multi: Boolean = false
-    private lateinit var answersIds: Array<String>
     private var selectedAnswers: String? = null
 
     private lateinit var modelArrayList: ArrayList<AnswersModel>
@@ -35,7 +34,9 @@ class AnswerActivity : AppCompatActivity() {
 
     //объединяет ответы в String, разделённый переносами строк
     private fun answersConcatenate(oneOfAnswers: String) {
-        if (selectedAnswers.isNullOrEmpty())
+        if (oneOfAnswers == R.string.new_answer_spacer.toString())
+            return
+        else if (selectedAnswers.isNullOrEmpty())
             selectedAnswers = oneOfAnswers
         else
             selectedAnswers = selectedAnswers + "\n" + oneOfAnswers
@@ -70,7 +71,6 @@ class AnswerActivity : AppCompatActivity() {
                     {
                         _stateAnswer.value = StateAnswer.SuccessSend
                         selectedAnswers = null
-                        //answersIds = result.body()?.body?.answersIds!!
                     }
                     else
                         _stateAnswer.value = StateAnswer.ErrorSend(errors())
