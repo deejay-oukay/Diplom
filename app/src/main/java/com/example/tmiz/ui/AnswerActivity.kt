@@ -1,7 +1,6 @@
 package com.example.tmiz.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -26,13 +25,21 @@ class AnswerActivity : AppCompatActivity() {
     private var questionId: String = ""
     private var multi: Boolean = false
     private lateinit var answersIds: Array<String>
-    private var selectedAnswers: ArrayList<String> = arrayListOf()
+    private var selectedAnswers: String? = null
 
     private lateinit var modelArrayList: ArrayList<AnswersModel>
     private lateinit var customAdapter: CustomAdapter
     private var answers: ArrayList<String> = arrayListOf(
         R.string.new_answer_spacer.toString(),
     )
+
+    //объединяет ответы в String, разделённый переносами строк
+    private fun answersConcatenate(oneOfAnswers: String) {
+        if (selectedAnswers.isNullOrEmpty())
+            selectedAnswers = oneOfAnswers
+        else
+            selectedAnswers = selectedAnswers + "\n" + oneOfAnswers
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,23 +53,23 @@ class AnswerActivity : AppCompatActivity() {
             for (elem in CustomAdapter.answersList) {
                 if (elem.getSelecteds()) {
                     try {
-                        selectedAnswers.add(elem.getAnswer())
+                        answersConcatenate(elem.getAnswer())
                     } catch (e: Exception) {
                         _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
                     }
                 }
             }
             if (!binding.newAnswerInput.text.isNullOrEmpty())
-                selectedAnswers.add(binding.newAnswerInput.text.toString())
+                answersConcatenate(binding.newAnswerInput.text.toString())
             lifecycleScope.launch {
                 try {
                     _stateAnswer.value = StateAnswer.Sending
-                    val result = RetroBuilder.api.answersSend(questionId, selectedAnswers.toTypedArray())
+                    val result = RetroBuilder.api.answersSend(questionId, selectedAnswers)
                     code = result.code()
                     if (code == 202)
                     {
                         _stateAnswer.value = StateAnswer.SuccessSend
-                        selectedAnswers.clear()
+                        selectedAnswers = null
                         //answersIds = result.body()?.body?.answersIds!!
                     }
                     else

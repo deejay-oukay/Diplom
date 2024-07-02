@@ -21,7 +21,7 @@ interface Api {
     @POST("/api/answers-send/")
     suspend fun answersSend(
         @Field("questionId") questionId: String,
-        @Field("answers") answers: Array<String>
+        @Field("answers") answers: String?
     ): Response<Results>
 
 }
