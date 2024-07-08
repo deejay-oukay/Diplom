@@ -9,6 +9,7 @@ import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityAnswerBinding
 import com.example.tmiz.presentation.AnswersModel
 import com.example.tmiz.presentation.CustomAdapter
+import com.example.tmiz.presentation.CustomAdapter1
 import com.example.tmiz.presentation.StateAnswer
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +29,7 @@ class AnswerActivity : AppCompatActivity() {
 
     private lateinit var modelArrayList: ArrayList<AnswersModel>
     private lateinit var customAdapter: CustomAdapter
+    private lateinit var customAdapter1: CustomAdapter1
     private var answers: ArrayList<String> = arrayListOf(
         R.string.new_answer_spacer.toString(),
     )
@@ -36,10 +38,10 @@ class AnswerActivity : AppCompatActivity() {
     private fun answersConcatenate(oneOfAnswers: String) {
         if (oneOfAnswers == getText(R.string.new_answer_spacer).toString())
             return
-        if (selectedAnswers.isNullOrEmpty())
-            selectedAnswers = oneOfAnswers
+        selectedAnswers = if (!multi || selectedAnswers.isNullOrEmpty())
+            oneOfAnswers
         else
-            selectedAnswers = selectedAnswers + "\n" + oneOfAnswers
+            selectedAnswers + "\n" + oneOfAnswers
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +49,32 @@ class AnswerActivity : AppCompatActivity() {
         binding = ActivityAnswerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         modelArrayList = getModel(false)
+
+        //возможно, следующие 4 строки здесь не нужны (они же выполняются позже в updateAnswers())
         customAdapter = CustomAdapter(this, modelArrayList)
+        customAdapter1 = CustomAdapter1(this, modelArrayList)
         binding.answersList.adapter = customAdapter
+        binding.answersList1.adapter = customAdapter1
 
         binding.answerButton.setOnClickListener {
-            for (elem in CustomAdapter.answersList) {
-                if (elem.getSelecteds()) {
-                    try {
-                        answersConcatenate(elem.getAnswer())
-                    } catch (e: Exception) {
-                        _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
+            if (multi) {
+                for (elem in CustomAdapter.answersList) {
+                    if (elem.getSelecteds()) {
+                        try {
+                            answersConcatenate(elem.getAnswer())
+                        } catch (e: Exception) {
+                            _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
+                        }
+                    }
+                }
+            } else {
+                for (elem in CustomAdapter1.answersList) {
+                    if (elem.getSelecteds()) {
+                        try {
+                            answersConcatenate(elem.getAnswer())
+                        } catch (e: Exception) {
+                            _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
+                        }
                     }
                 }
             }
@@ -90,6 +108,7 @@ class AnswerActivity : AppCompatActivity() {
                         lifecycleScope.launch {
                             binding.statusLabel.text = getString(R.string.state_loading)
                             binding.answersList.isVisible = false
+                            binding.answersList1.isVisible = false
                             binding.answerButton.isEnabled = false
                             binding.newAnswerLayout.isVisible = false
                         }
@@ -100,7 +119,6 @@ class AnswerActivity : AppCompatActivity() {
                             binding.answerButton.isEnabled = true
                             binding.questionLabel.text = question.toString()
                             updateAnswers()
-                            binding.answersList.isVisible = true
                             binding.newAnswerInput.text = null
                             binding.newAnswerLayout.isVisible = true
                         }
@@ -155,9 +173,17 @@ class AnswerActivity : AppCompatActivity() {
                     question = result.body()?.body?.question.toString()
                     questionId = result.body()?.body?.questionId.toString()
                     _stateAnswer.value = StateAnswer.SuccessGet
+                    selectedAnswers = null
                     setAnswers(result.body()?.body?.answers)
                     updateAnswers()
                     multi = result.body()?.body?.multi!!
+                    if (multi) {
+                        binding.answersList.isVisible = true
+                        binding.answersList1.isVisible = false
+                    } else {
+                        binding.answersList.isVisible = false
+                        binding.answersList1.isVisible = true
+                    }
                 }
                 else
                     _stateAnswer.value = StateAnswer.ErrorGet(errors())
@@ -166,10 +192,9 @@ class AnswerActivity : AppCompatActivity() {
                 _error.send(e.toString())
             }
         }
-        customAdapter = CustomAdapter(this, modelArrayList,multi)
     }
 
-    fun getModel(isSelect: Boolean): ArrayList<AnswersModel> {
+    private fun getModel(isSelect: Boolean): ArrayList<AnswersModel> {
         val list = ArrayList<AnswersModel>()
         for (element in answers) {
             val model = AnswersModel()
@@ -192,7 +217,9 @@ class AnswerActivity : AppCompatActivity() {
     private fun updateAnswers() {
         modelArrayList = getModel(false)
         customAdapter = CustomAdapter(this, modelArrayList)
+        customAdapter1 = CustomAdapter1(this, modelArrayList)
         binding.answersList.adapter = customAdapter
+        binding.answersList1.adapter = customAdapter1
    }
 
     private fun errors(): String {

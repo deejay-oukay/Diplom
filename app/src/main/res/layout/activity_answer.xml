@@ -23,7 +23,22 @@
         app:layout_constraintBottom_toTopOf="@id/new_answer_layout"
         app:layout_constraintTop_toBottomOf="@id/question_label"
         app:layout_constraintVertical_bias="0.161"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:visibility="invisible"
+    />
+
+    <ListView
+        android:id="@+id/answers_list1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="160dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toTopOf="@id/new_answer_layout"
+        app:layout_constraintTop_toBottomOf="@id/question_label"
+        app:layout_constraintVertical_bias="0.161"
+        tools:layout_editor_absoluteX="0dp"
+        android:visibility="invisible"
+    />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/new_answer_layout"
