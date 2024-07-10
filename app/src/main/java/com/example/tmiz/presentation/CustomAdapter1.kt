@@ -9,10 +9,10 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.tmiz.R
-import java.util.ArrayList
 
-class CustomAdapter1(private val context: Context,
-                     private var modelArrayList: ArrayList<AnswersModel>
+class CustomAdapter1(
+    private val context: Context,
+    private var modelArrayList: ArrayList<AnswersModel>
 ) : BaseAdapter() {
     override fun getViewTypeCount(): Int {
         return count
@@ -45,25 +45,17 @@ class CustomAdapter1(private val context: Context,
         else
             holder = convertView.tag as ViewHolder
         holder.label!!.text = modelArrayList[position].getAnswer()
-        holder.check!!.isChecked = modelArrayList[position].getSelecteds()
+        holder.check!!.isChecked = position == lastAnswerPosition
         holder.check!!.setTag(R.integer.btn_plus_view, convertView)
         holder.check!!.tag = position
         holder.check!!.setOnClickListener {
             val pos = holder.check!!.tag as Int
-            Toast.makeText(context,
-                context.getString(R.string.toast_selected_answers_number)+(pos+1), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,context.getString(R.string.toast_selected_answers_text)+holder.label!!.text, Toast.LENGTH_SHORT).show()
             for (i in 0..<modelArrayList.size)
-                if (i != pos)
-                    modelArrayList[i].setSelecteds(false)
-            if (modelArrayList[pos].getSelecteds()) {
-                modelArrayList[pos].setSelecteds(false)
-                answersList = modelArrayList
-            }
-            else
-            {
-                modelArrayList[pos].setSelecteds(true)
-                answersList = modelArrayList
-            }
+                modelArrayList[i].setSelecteds(false)
+            modelArrayList[pos].setSelecteds(true)
+            holder.check!!.isChecked = true
+            answersList = modelArrayList
         }
         return convertView
     }
@@ -73,6 +65,8 @@ class CustomAdapter1(private val context: Context,
     }
     companion object {
         lateinit var answersList: ArrayList<AnswersModel>
+        var lastAnswerPosition = -1
     }
 
 }
+

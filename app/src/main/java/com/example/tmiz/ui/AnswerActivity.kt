@@ -50,12 +50,6 @@ class AnswerActivity : AppCompatActivity() {
         setContentView(binding.root)
         modelArrayList = getModel(false)
 
-        //возможно, следующие 4 строки здесь не нужны (они же выполняются позже в updateAnswers())
-        customAdapter = CustomAdapter(this, modelArrayList)
-        customAdapter1 = CustomAdapter1(this, modelArrayList)
-        binding.answersList.adapter = customAdapter
-        binding.answersList1.adapter = customAdapter1
-
         binding.answerButton.setOnClickListener {
             if (multi) {
                 for (elem in CustomAdapter.answersList) {

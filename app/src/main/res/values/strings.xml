@@ -37,5 +37,6 @@
     <string name="error_404">Вопрос не найден</string>
     <string name="label_answer_accepted">Ваш голос учтён</string>
     <string name="toast_selected_answers_number">"Выбран вариант: "</string>
+    <string name="toast_selected_answers_text">"Будет отправлено: "</string>
     <string name="error_422">Можно выбрать/указать только один вариант ответа</string>
 </resources>
