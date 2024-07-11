@@ -56,6 +56,8 @@ class CustomAdapter1(
             modelArrayList[pos].setSelecteds(true)
             holder.check!!.isChecked = true
             answersList = modelArrayList
+            lastAnswerPosition = position
+            notifyDataSetChanged()
         }
         return convertView
     }
