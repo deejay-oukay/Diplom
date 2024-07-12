@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-    />
+        />
 
     <ListView
         android:id="@+id/answers_list"
@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.161"
         tools:layout_editor_absoluteX="0dp"
         android:visibility="invisible"
-    />
+        />
 
     <ListView
         android:id="@+id/answers_list1"
@@ -39,7 +39,7 @@
         app:layout_constraintVertical_bias="0.161"
         tools:layout_editor_absoluteX="0dp"
         android:visibility="invisible"
-    />
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/new_answer_layout"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/hint_answer_the_questions"
-    />
+        />
 
     <Button
         android:id="@+id/answer_button"
@@ -75,16 +75,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-    />
+        />
 
     <Button
-        android:id="@+id/skip_button"
+        android:id="@+id/refresh_button"
         android:text="@string/button_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-    />
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

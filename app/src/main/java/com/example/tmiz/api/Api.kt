@@ -13,15 +13,14 @@ interface Api {
         @Field("answers") answers: String,
         @Field("multi") multi: Boolean
     ): Response<Results>
-
     @POST("/api/questions-random/")
     suspend fun questionsRandom(): Response<Results>
-
     @FormUrlEncoded
     @POST("/api/answers-send/")
     suspend fun answersSend(
         @Field("questionId") questionId: String,
         @Field("answers") answers: String?
     ): Response<Results>
-
+    @POST("/api/questions-mine/")
+    suspend fun questionsMine(): Response<Results>
 }

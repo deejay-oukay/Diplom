@@ -1,16 +1,17 @@
 package com.example.tmiz.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.tmiz.R
 import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityAnswerBinding
-import com.example.tmiz.presentation.AnswersModel
-import com.example.tmiz.presentation.CustomAdapter
-import com.example.tmiz.presentation.CustomAdapter1
-import com.example.tmiz.presentation.StateAnswer
+import com.example.tmiz.adapters.AnswersModel
+import com.example.tmiz.adapters.CustomAdapter
+import com.example.tmiz.adapters.CustomAdapter1
+import com.example.tmiz.states.StateAnswer
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,6 +58,7 @@ class AnswerActivity : AppCompatActivity() {
                         try {
                             answersConcatenate(elem.getAnswer())
                         } catch (e: Exception) {
+                            Log.d("!!!",e.message.toString())
                             _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
                         }
                     }
@@ -67,6 +69,7 @@ class AnswerActivity : AppCompatActivity() {
                         try {
                             answersConcatenate(elem.getAnswer())
                         } catch (e: Exception) {
+                            Log.d("!!!",e.message.toString())
                             _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
                         }
                     }
@@ -91,7 +94,7 @@ class AnswerActivity : AppCompatActivity() {
             }
         }
 
-        binding.skipButton.setOnClickListener {
+        binding.answerButton.setOnClickListener {
             randomQuestion()
         }
 

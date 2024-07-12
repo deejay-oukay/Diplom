@@ -1,4 +1,4 @@
-package com.example.tmiz.presentation
+package com.example.tmiz.states
 
 sealed class StateCreate {
     object Default : StateCreate()

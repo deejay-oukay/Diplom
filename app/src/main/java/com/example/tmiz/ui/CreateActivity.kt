@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.tmiz.R
 import com.example.tmiz.api.RetroBuilder
 import com.example.tmiz.databinding.ActivityCreateBinding
-import com.example.tmiz.presentation.StateCreate
+import com.example.tmiz.states.StateCreate
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

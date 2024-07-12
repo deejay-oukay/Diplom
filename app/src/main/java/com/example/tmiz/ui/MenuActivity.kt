@@ -20,5 +20,9 @@ class MenuActivity : AppCompatActivity() {
             val intent = Intent(this, AnswerActivity::class.java)
             startActivity(intent)
         }
+        binding.questionsButton.setOnClickListener {
+            val intent = Intent(this, MineActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

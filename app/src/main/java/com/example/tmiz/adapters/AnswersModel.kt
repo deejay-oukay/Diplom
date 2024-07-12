@@ -1,4 +1,4 @@
-package com.example.tmiz.presentation
+package com.example.tmiz.adapters
 
 class AnswersModel {
     var isSelected: Boolean = false

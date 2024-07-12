@@ -1,4 +1,4 @@
-package com.example.tmiz.presentation
+package com.example.tmiz.states
 
 sealed class StateAnswer {
    object SuccessGet : StateAnswer()

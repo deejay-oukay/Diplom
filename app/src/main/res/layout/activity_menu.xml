@@ -30,7 +30,7 @@
     />
 
     <Button
-        android:id="@+id/button_questions"
+        android:id="@+id/questions_button"
         android:text="@string/button_questions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

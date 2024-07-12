@@ -15,6 +15,9 @@
         android:theme="@style/Base.Theme.Tmiz"
         tools:targetApi="31">
         <activity
+            android:name=".ui.MineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.AnswerActivity"
             android:exported="false"
             android:label="@string/label_answer_the_questions"
