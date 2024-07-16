@@ -22,9 +22,7 @@ class MineActivity : AppCompatActivity() {
     private val state = _stateMine.asStateFlow()
     private val _error = Channel<String>()
     private var code = 0
-    private var question: String? = null
-    private var questionId: String = ""
-    private var questions: ArrayList<Question> = arrayListOf()
+    private var questions: ArrayList<Question> = arrayListOf(Question("",""))
     private lateinit var modelArrayList: ArrayList<QuestionsModel>
     private lateinit var adapter: QuestionAdapter
 
@@ -32,6 +30,7 @@ class MineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMineBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.refreshButton.setOnClickListener { myQuestions() }
         lifecycleScope.launch {
             state.collect { state ->
                 when (state) {
@@ -55,7 +54,7 @@ class MineActivity : AppCompatActivity() {
                                 append(getString(R.string.state_error))
                                 append(" ")
                                 append(state.error)
-                                binding.refreshButton.isEnabled = false
+                                binding.refreshButton.isVisible = true
                             }
                             binding.questionsList.isVisible = false
                         }
@@ -74,16 +73,15 @@ class MineActivity : AppCompatActivity() {
                 code = result.code()
                 if (code == 200)
                 {
-                    question = result.body()?.body?.question.toString()
-                    questionId = result.body()?.body?.questionId.toString()
                     _stateMine.value = StateMine.Success
-                    setQuestions(result.body()?.body?.questions)
+                    setQuestions(result.body()?.body?.questionsIds,result.body()?.body?.questions)
                     updateQuestions()
                 }
                 else
                     _stateMine.value = StateMine.Error(errors())
             } catch (e: Exception) {
                 _stateMine.value = StateMine.Error(e.message.toString())
+                //_stateMine.value = StateMine.Error(e.stackTraceToString())
                 _error.send(e.toString())
             }
         }
@@ -104,17 +102,16 @@ class MineActivity : AppCompatActivity() {
         binding.questionsList.adapter = adapter
 
     }
-    private fun setQuestions(al: Array<Question>?) {
+    private fun setQuestions(ids: Array<String>?, texts: Array<String>?) {
         questions.clear()
-        if (!al.isNullOrEmpty())
-            for (i in al.indices) {
-                questions.add(Question(al[i].questionId,al[i].question))
-            }
+        if (!ids.isNullOrEmpty() && (!texts.isNullOrEmpty()))
+            for (i in ids.indices)
+                questions.add(Question(ids[i],texts[i]))
     }
     private fun errors(): String {
         if (code == 401)
             return getString(R.string.error_401)
-        else if ((code == 204) || (question == null))
+        else if ((code == 204) || (questions.isEmpty()))
             return getString(R.string.error_204)
         else if (code >= 500)
             return getString(R.string.error_500_and_higher)

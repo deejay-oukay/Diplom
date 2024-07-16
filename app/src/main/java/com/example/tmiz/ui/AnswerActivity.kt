@@ -32,7 +32,7 @@ class AnswerActivity : AppCompatActivity() {
     private lateinit var customAdapter: CustomAdapter
     private lateinit var customAdapter1: CustomAdapter1
     private var answers: ArrayList<String> = arrayListOf(
-        R.string.new_answer_spacer.toString(),
+        R.string.new_answer_spacer.toString()
     )
 
     //объединяет ответы в String, разделённый переносами строк
