@@ -58,7 +58,6 @@ class AnswerActivity : AppCompatActivity() {
                         try {
                             answersConcatenate(elem.getAnswer())
                         } catch (e: Exception) {
-                            Log.d("!!!",e.message.toString())
                             _stateAnswer.value = StateAnswer.ErrorSend(e.message.toString())
                         }
                     }
@@ -94,7 +93,7 @@ class AnswerActivity : AppCompatActivity() {
             }
         }
 
-        binding.answerButton.setOnClickListener {
+        binding.refreshButton.setOnClickListener {
             randomQuestion()
         }
 

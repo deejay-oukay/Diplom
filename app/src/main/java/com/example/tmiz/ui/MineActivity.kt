@@ -43,7 +43,7 @@ class MineActivity : AppCompatActivity() {
                     }
                     StateMine.Success -> {
                         lifecycleScope.launch {
-                            binding.statusLabel.text = getString(R.string.state_success)
+                            binding.statusLabel.text = getString(R.string.hint_select_the_questions)
                             binding.refreshButton.isVisible = false
                             updateQuestions()
                         }
@@ -76,12 +76,12 @@ class MineActivity : AppCompatActivity() {
                     _stateMine.value = StateMine.Success
                     setQuestions(result.body()?.body?.questionsIds,result.body()?.body?.questions)
                     updateQuestions()
+                    binding.questionsList.isVisible = true
                 }
                 else
                     _stateMine.value = StateMine.Error(errors())
             } catch (e: Exception) {
                 _stateMine.value = StateMine.Error(e.message.toString())
-                //_stateMine.value = StateMine.Error(e.stackTraceToString())
                 _error.send(e.toString())
             }
         }
@@ -106,7 +106,7 @@ class MineActivity : AppCompatActivity() {
         questions.clear()
         if (!ids.isNullOrEmpty() && (!texts.isNullOrEmpty()))
             for (i in ids.indices)
-                questions.add(Question(ids[i],texts[i]))
+                questions.add(Question(ids[i], texts[i]))
     }
     private fun errors(): String {
         if (code == 401)

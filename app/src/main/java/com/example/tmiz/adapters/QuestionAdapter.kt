@@ -25,7 +25,7 @@ class QuestionAdapter(private val context: Context, private var modelArrayList: 
             holder = ViewHolder()
             val inflater = context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = inflater.inflate(R.layout.answers, null, true)
+            convertView = inflater.inflate(R.layout.questions, null, true)
             holder.id = convertView!!.findViewById(R.id.question_id)!!
             holder.text = convertView.findViewById(R.id.question_text)!!
             convertView.tag = holder
@@ -36,10 +36,12 @@ class QuestionAdapter(private val context: Context, private var modelArrayList: 
         holder.id!!.text = modelArrayList[position].getId()
         holder.id!!.setTag(R.integer.btn_plus_view, convertView)
         holder.id!!.tag = position
-        holder.id!!.setOnClickListener {
+        holder.text!!.setOnClickListener {
+            val pos = holder.id!!.tag as Int
             Toast.makeText(context,
                 "Загрузка статистики пока не реализована: ", Toast.LENGTH_SHORT).show()
         }
+        //questionsList = modelArrayList
         return convertView
     }
     private inner class ViewHolder {
